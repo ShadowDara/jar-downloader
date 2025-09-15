@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "de.shadowdara.jardownloader"
-version = "0.1.2-SNAPSHOT"
+version = "0.1.3-SNAPSHOT"
 
 repositories {
     mavenCentral()

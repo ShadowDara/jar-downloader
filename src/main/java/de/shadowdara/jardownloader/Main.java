@@ -9,24 +9,56 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class Main {
-    public static String version = "0.1.0";
+    public static String version = "0.1.3";
     public static String download_file = "dependencies.txt";
 
     public static void main(String[] args) throws IOException {
         System.out.println("JAR-DOWNLOADER v" + version);
 
+        // add entry point with -i and then a download File!
+        if (args.length >= 2 && Objects.equals(args[0], "-i")) {
+            Path dependencyFile = Paths.get(args[1]);
+
+            if (Files.exists(dependencyFile)) {
+                System.out.println("Reading dependencies from: " + dependencyFile);
+
+                try (BufferedReader reader = Files.newBufferedReader(dependencyFile)) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        line = line.trim();
+                        if (line.isEmpty() || line.startsWith("#")) {
+                            continue; // Kommentar oder leere Zeile überspringen
+                        }
+
+                        if (line.startsWith("http://") || line.startsWith("https://")) {
+                            // Aktuelles Verzeichnis als Download-Ziel verwenden
+                            Path downloadDir = Paths.get(".");
+                            downloadFile(line, downloadDir);
+                        } else {
+                            System.out.println("Invalid line (ignored): " + line);
+                        }
+                    }
+                } catch (IOException e) {
+                    System.err.println("Error reading dependency file: " + e.getMessage());
+                }
+
+                return;
+            } else {
+                System.err.println("Dependency file not found: " + dependencyFile);
+                return;
+            }
+        }
+
+
         // Pfad zum Verzeichnis mit JARs, z.B. aktuelles Verzeichnis
         Path searchPath = Paths.get(args.length > 0 ? args[0] : ".");
         // Download-Zielordner
         Path downloadDir = Paths.get(args.length > 1 ? args[1] : "");
-
-        if (!Files.exists(downloadDir)) {
-            Files.createDirectories(downloadDir);
-        }
 
         // Alle .jar-Dateien rekursiv finden
         Files.walk(searchPath)
