@@ -1,3 +1,11 @@
+@echo off
+
+SET SCRIPT_DIR=%~dp0
+
 ECHO Programm Requires Java 21
 
-java -jar jar-downloader-0.1.0-SNAPSHOT.jar %*
+SET LIB_DIR=%SCRIPT_DIR%
+
+SET CLASSPATH=%LIB_DIR%jar-downloader.jar
+
+djava -cp "%CLASSPATH%" de.shadowdara.jardownloader.Main %*
