@@ -8,4 +8,4 @@ SET LIB_DIR=%SCRIPT_DIR%
 
 SET CLASSPATH=%LIB_DIR%jar-downloader.jar
 
-djava -cp "%CLASSPATH%" de.shadowdara.jardownloader.Main %*
+java -cp "%CLASSPATH%" de.shadowdara.jardownloader.Main %*
