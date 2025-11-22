@@ -7,3 +7,5 @@ downloads these jar easily.
 
 To use the `cmd` and `shell` file to start,
 remove the version at the end of the jar
+
+Run with ``help`` for more Infos!

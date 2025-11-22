@@ -6,6 +6,6 @@ echo "Programm Requires Java 21"
 
 LIB_DIR="$SCRIPT_DIR"
 
-CLASSPATH="$LIB_DIR/file-mirror.jar"
+CLASSPATH="$LIB_DIR/jar-downloader.jar"
 
 java -cp "$CLASSPATH" de.shadowdara.jardownloader.Main "$@"
